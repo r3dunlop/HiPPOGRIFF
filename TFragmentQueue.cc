@@ -119,6 +119,22 @@ TGriffinFragment *TFragmentQueue::Get()	{
 	return frag;
 }
 
+TGriffinFragment *TFragmentQueue::GetFront()	{
+
+    //std::unique_lock<std::mutex> sorted(Sorted,std::defer_lock);
+    //sorted.lock();
+	while(TFragmentQueue::Sorted.try_lock())	{
+		//do nothing
+	}
+
+
+	TGriffinFragment *frag = (fFragmentQueue.front());
+
+    	TFragmentQueue::Sorted.unlock();
+	//printf("\tGetting frag:\t%i\tNumber in Q = %i\n",frag->MidasId,fFragsInQueue);
+	return frag;
+}
+
 void TFragmentQueue::Pop()	{
     //std::unique_lock<std::mutex> sorted(Sorted,std::defer_lock);
     //sorted.lock();

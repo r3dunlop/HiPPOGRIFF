@@ -2,7 +2,7 @@
 *.Cycles: OFF
 
 #Max Number of Events
-MidUnpack.MaxEventNumber: 100000
+MidUnpack.MaxEventNumber: 10
 
 # Verbosity Levels 0 = none, 1 = errors, 2 = data dump, (default = 1)
 MidUnpack.Verbosity: 1

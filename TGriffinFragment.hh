@@ -32,7 +32,7 @@ typedef char int8_t;
 class TGriffinFragment : public TObject {
 public:
 	TGriffinFragment();
-	~TGriffinFragment(){};
+	~TGriffinFragment(){ std::cout << "Deleting fragment" << std::endl;}
 
 	uint16_t hitNumber;
 	uint32_t ppg;

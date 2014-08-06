@@ -65,6 +65,7 @@ class TFragmentQueue : public Multiton<TFragmentQueue>, public TObject {
 		void Add(TGriffinFragment*);
 
 		TGriffinFragment *Get();
+		TGriffinFragment *GetFront();
 
 		void Pop();
 		TGriffinFragment *PopFragment();
