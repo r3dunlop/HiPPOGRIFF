@@ -59,7 +59,8 @@ public:
 
 	void Clear();
 
-	bool IsGoodFrag();
+	inline bool IsGoodFrag();
+	inline bool IsBadFrag();
 
 	uint32_t GetNBadEvents(){return nBadEvents;}
 	uint32_t GetNEvents(){return nEvents;}

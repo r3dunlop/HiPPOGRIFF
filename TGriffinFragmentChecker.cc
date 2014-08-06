@@ -13,22 +13,23 @@ void TGriffinFragmentChecker::Check(std::string QName){
 	//I think there are pointer scope problems with TFragmentQueue!!!!!!!
 	TGriffinFragment *tmpGriffinFrag = TFragmentQueue::GetPtr(QName)->PopFragment();
 
-	//std::cout << tmpGriffinFrag->numberPileups << std::endl;
+	std::cout << tmpGriffinFrag->channelAddress << std::endl;
 
 	//We perform all of these checks. If there is an issue we will throw an exception so we do not
 	//have to perform all of the checks on a bad fragment.
 	try{
 		CheckFlags();
-		CheckDataType();
+		CheckDataType(tmpGriffinFrag);
 		CheckTrailer();
 		CheckChannelTriggerID();
 		CheckPileupHits();
 		//etc...
 	}
 	//This catch might contain some information on what made the fragment bad
-	catch(char const* failure){
+	catch(MyException const& e){
+		BadFrag();
 		if(Settings::GetInstance()->GetErrorKillFlag()){
-			std::cerr << "Bad Event: " << failure << std::endl; //Event number?
+			std::cerr << "Bad Event: " << e.failureMode << "=" << e.value << std::endl; //Event number?
 			exit(1);
 		}
 	//Put event in BadQ if we threw
@@ -44,21 +45,23 @@ void TGriffinFragmentChecker::Clear(){
 
 bool TGriffinFragmentChecker::CheckFlags(){
 
-	throw("Bad Flags");
 	return true;
 
 }
 
-bool TGriffinFragmentChecker::CheckDataType(){
+bool TGriffinFragmentChecker::CheckDataType(TGriffinFragment* frag){
 
-	throw("Bad Data Type");
+	if(frag->dataType >4 || frag->dataType <1)
+	{
+		throw MyException("Data Type", frag->dataType);
+	}
+
 	return true;
 
 }
 
 bool TGriffinFragmentChecker::CheckTrailer(){
 
-	throw("Bad Trailer");
 	return true;
 
 }
@@ -68,7 +71,6 @@ bool TGriffinFragmentChecker::CheckChannelTriggerID(){
 }
 
 bool TGriffinFragmentChecker::CheckPileupHits(){
-	throw("Bad Pileup Hits");
 	return true;
 }
 

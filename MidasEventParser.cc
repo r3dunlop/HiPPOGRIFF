@@ -47,8 +47,6 @@ MidasEventParser::~MidasEventParser(){
 
 
 bool MidasEventParser::Parse(uint32_t *dword,uint32_t mS, uint32_t mSerialNumber, uint64_t mTime){
-	//Will probably pass in an instance of TFragQ to Parse, singleton or a copy?
-
 	//One MIDAS event can contain up to 100 physics events or as few as 1
 	//These variables are members of EventProcessor for easy access by postcheckers, datadumpers, etc...
 	dataword = dword;//These variables are definitely not thread-safe
@@ -91,7 +89,7 @@ bool MidasEventParser::Parse(uint32_t *dword,uint32_t mS, uint32_t mSerialNumber
 					header_flag = true;
 				}
 				else{
-					BadFrag("Multiple header events without a trailer!");//Maybe not a bad frag?
+					BadFrag("Multiple header events without a trailer!");
 				}
 				break;
 		  case(kChannelTrigger):
@@ -121,52 +119,36 @@ bool MidasEventParser::Parse(uint32_t *dword,uint32_t mS, uint32_t mSerialNumber
 				//if((*(dataword+wordcount+2*GetPileupType()) & PacketMask)  >> PacketShift == trailer){
 				//Need a way to make this recognize it's a bad frag, but then record as much info as
 				//possible in the griff frag to go into the bad tree
-					SetDeadTime(*(dataword+wordcount),GrifFrag);
-					SetUpperTimestamp(*(dataword+wordcount),GrifFrag);
-					deadtime_flag = true;
-					//Loop over pileup type
-					while(nHits < GetPileupType()){// && bank.GotData()){// && IsGoodFrag()){
-						wordcount++;
-						//Move to the next word where the upper K-value and Pulse Height should be stored
-						//I should find out if we should reject an entire MIDAS event if a single K/PH value is bad
-						SetHighKBits(*(dataword+wordcount),GrifFrag);
-						SetPulseHeight(*(dataword+wordcount),GrifFrag);
-						wordcount++;
-						//Move Forward to the next word where the lower K-value and CFD Timing should be stored
-						SetLowKBits(*(dataword+wordcount),GrifFrag);
-						SetCFDTiming(*(dataword+wordcount),GrifFrag);
-						nHits++;
-						GrifFrag->hitNumber++;
-						//I might want to check the trailer stuff first and then start processing events at this level?
-						//We need to start Qing up events before the trailer. Up to three per "event"
+				SetDeadTime(*(dataword+wordcount),GrifFrag);
+				SetUpperTimestamp(*(dataword+wordcount),GrifFrag);
+				deadtime_flag = true;
+				//Loop over pileup type
+				while(nHits < GetPileupType()){// && bank.GotData()){// && IsGoodFrag()){
+					wordcount++;
+					//Move to the next word where the upper K-value and Pulse Height should be stored
+					//I should find out if we should reject an entire MIDAS event if a single K/PH value is bad
+					SetHighKBits(*(dataword+wordcount),GrifFrag);
+					SetPulseHeight(*(dataword+wordcount),GrifFrag);
+					wordcount++;
+					//Move Forward to the next word where the lower K-value and CFD Timing should be stored
+					SetLowKBits(*(dataword+wordcount),GrifFrag);
+					SetCFDTiming(*(dataword+wordcount),GrifFrag);
+					nHits++;
+					GrifFrag->hitNumber++;
+					//I might want to check the trailer stuff first and then start processing events at this level?
+					//We need to start Qing up events before the trailer. Up to three per "event"
 
-					}
-			  	  	if(!deadtime_flag){
-			  	  		deadtime_flag = true;
-			  	  	}
-					else{
-						BadFrag("Multiple dead time packets without a trailer!");
-					}
-			//	}
-			//	else{
-			//		BadFrag();
-			//	}
+				}
+				if(!deadtime_flag){
+					deadtime_flag = true;
+				}
+				else{
+					BadFrag("Multiple dead time packets without a trailer!");
+				}
 				break;
 		  case(kTrailer):
 				CheckTrailerWord(*(dataword+wordcount),GrifFrag);
 				trailer_flag = true;
-
-				//These methods are a little sketchy right now
-				//Not completely sure what the event-by-event structure will looks like
-				if(IsGoodFrag()){
-					//Need to write events at this point
-				}
-				else{
-					nBadEvents++;
-					nBadPileups += GetPileupType();
-					std::cout << std::endl;
-				}
-
 
 				if(IsGoodFrag()){
 					TFragmentQueue::GetPtr("parsedQ")->AddToQueue(GrifFrag);
@@ -175,11 +157,10 @@ bool MidasEventParser::Parse(uint32_t *dword,uint32_t mS, uint32_t mSerialNumber
 				{
 					//This is for basic checks before the Event Checker
 					TFragmentQueue::GetPtr("badQ")->AddToQueue(GrifFrag);
+					nBadEvents++;
+					nBadPileups += GetPileupType();
 				}
-
 				nEvents++;
-				Clear(); //Clear the eventProcessor and Get ready for the next event
-
 				break;
 		  default:
 			  std::cout << "Non-Packet Type = " << std::hex << *(dataword+wordcount) << std::endl;
@@ -214,13 +195,6 @@ void MidasEventParser::SetDataType(uint32_t& dataword,TGriffinFragment* GrifFrag
 	GrifFrag->dataType = ((dataword & DataTypeMask) >> DataTypeShift);
 
 //	std::cout << "The Data Type is: " << dataType << std::endl;
-
-	if(dataType >4 || dataType <1)
-	{
-		std::cerr << "The Data Type of: " << dataType << " does not exist" << std::endl;
-		BadFrag();
-		//exit(-1);
-	}
 }
 
 void MidasEventParser::SetAddress(uint32_t& dataword,TGriffinFragment* GrifFrag){
@@ -429,6 +403,10 @@ void MidasEventParser::CheckTrailerWord(uint32_t& dataword,TGriffinFragment* Gri
 
 bool MidasEventParser::IsGoodFrag(){
 	return !badFrag_flag;
+}
+
+bool MidasEventParser::IsBadFrag(){
+	return badFrag_flag;
 }
 
 void MidasEventParser::GoodFrag(){
