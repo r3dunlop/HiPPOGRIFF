@@ -7,8 +7,11 @@
 
 #include "TGriffinFragmentChecker.hh"
 
-void TGriffinFragmentChecker::Check(std::string QName){
+bool TGriffinFragmentChecker::Check(std::string QName){
 
+	if(TFragmentQueue::GetPtr(QName)->Size() == 0){
+		return false;
+	}
 	this->Clear();
 	//I think there are pointer scope problems with TFragmentQueue!!!!!!!
 	TGriffinFragment *tmpGriffinFrag = TFragmentQueue::GetPtr(QName)->PopFragment();
@@ -36,6 +39,7 @@ void TGriffinFragmentChecker::Check(std::string QName){
 
 	}
 
+	return TFragmentQueue::GetPtr(QName)->Size();
 
 }
 

@@ -183,7 +183,7 @@ int main(int argc, char **argv)
     }
     TGriffinFragmentChecker *myFragChecker = new TGriffinFragmentChecker;
 
-    myFragChecker->Check("parsedQ");
+    while(myFragChecker->Check("parsedQ"));
 
     //done with frag checking
     delete myFragChecker;

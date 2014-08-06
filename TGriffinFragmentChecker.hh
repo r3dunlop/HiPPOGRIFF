@@ -30,7 +30,7 @@ public:
 	TGriffinFragmentChecker(){};
 	~TGriffinFragmentChecker(){};
 
-	void Check(std::string);
+	bool Check(std::string);
 
 private:
 	inline bool CheckFlags();
