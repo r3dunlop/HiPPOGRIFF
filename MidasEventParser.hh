@@ -37,31 +37,29 @@ public:
 
 	bool Parse(uint32_t*,uint32_t, uint32_t, uint64_t);
 
-	inline void SetNFilterPatterns(uint32_t&);
-	inline void SetDataType(uint32_t&);
-	inline void SetAddress(uint32_t&);
-	inline void SetDetectorType(uint32_t&);
-	inline void SetPileupType(uint32_t&);
-	inline void SetPPGPattern(uint32_t&);
-	inline void SetMasterFilterID(uint32_t&);
-	inline void SetMasterFilterPattern(uint32_t &);
-	inline void SetChannelTriggerID(uint32_t&);
-	inline void SetLowerTimestamp(uint32_t&);
-	inline void SetUpperTimestamp(uint32_t&);
-	inline void SetDeadTime(uint32_t&);
-	inline void SetLowKBits(uint32_t&);
-	inline void SetHighKBits(uint32_t&);
-	inline void SetPulseHeight(uint32_t&);
-	inline void SetCFDTiming(uint32_t&);
-	inline void SetWaveForm(uint32_t&);
+	inline void SetNFilterPatterns(uint32_t&,TGriffinFragment*);
+	inline void SetDataType(uint32_t&,TGriffinFragment*);
+	inline void SetAddress(uint32_t&,TGriffinFragment*);
+	inline void SetDetectorType(uint32_t&,TGriffinFragment*);
+	inline void SetPileupType(uint32_t&,TGriffinFragment*);
+	inline void SetPPGPattern(uint32_t&,TGriffinFragment*);
+	inline void SetMasterFilterID(uint32_t&,TGriffinFragment*);
+	inline void SetMasterFilterPattern(uint32_t &,TGriffinFragment*);
+	inline void SetChannelTriggerID(uint32_t&,TGriffinFragment*);
+	inline void SetLowerTimestamp(uint32_t&,TGriffinFragment*);
+	inline void SetUpperTimestamp(uint32_t&,TGriffinFragment*);
+	inline void SetDeadTime(uint32_t&,TGriffinFragment*);
+	inline void SetLowKBits(uint32_t&,TGriffinFragment*);
+	inline void SetHighKBits(uint32_t&,TGriffinFragment*);
+	inline void SetPulseHeight(uint32_t&,TGriffinFragment*);
+	inline void SetCFDTiming(uint32_t&,TGriffinFragment*);
+	inline void SetWaveForm(uint32_t&,TGriffinFragment*);
 
-	void CheckTrailerWord(uint32_t&);
+	void CheckTrailerWord(uint32_t&,TGriffinFragment*);
 
 	void Clear();
 
 	bool IsGoodFrag();
-
-	TGriffinFragment GrifFrag;
 
 	uint32_t GetNBadEvents(){return nBadEvents;}
 	uint32_t GetNEvents(){return nEvents;}

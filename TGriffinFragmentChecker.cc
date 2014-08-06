@@ -10,8 +10,10 @@
 void TGriffinFragmentChecker::Check(std::string QName){
 
 	this->Clear();
-	TGriffinFragment tmpGriffinFrag;
-//	tmpGriffinFrag = TFragmentQueueMap::instance()->PopFragment(QName);
+	//I think there are pointer scope problems with TFragmentQueue!!!!!!!
+	TGriffinFragment *tmpGriffinFrag = TFragmentQueue::GetPtr(QName)->PopFragment();
+
+	//std::cout << tmpGriffinFrag->numberPileups << std::endl;
 
 	//We perform all of these checks. If there is an issue we will throw an exception so we do not
 	//have to perform all of the checks on a bad fragment.
@@ -49,7 +51,7 @@ bool TGriffinFragmentChecker::CheckFlags(){
 
 bool TGriffinFragmentChecker::CheckDataType(){
 
-	throw("Bad Data Type")
+	throw("Bad Data Type");
 	return true;
 
 }

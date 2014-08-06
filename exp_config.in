@@ -2,13 +2,13 @@
 *.Cycles: OFF
 
 #Max Number of Events
-MidUnpack.MaxEventNumber: 10
+MidUnpack.MaxEventNumber: 100000
 
 # Verbosity Levels 0 = none, 1 = errors, 2 = data dump, (default = 1)
 MidUnpack.Verbosity: 1
 
 # Kill the program on an error? Comes with a data dump of bad MIDAS event (default = YES)
-MidUnpack.ErrorKill: YES
+MidUnpack.ErrorKill: NO
 
 # Set the goodness of HPGe detectors (default = ON)
 *.HPGe0: ON

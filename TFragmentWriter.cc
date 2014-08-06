@@ -33,6 +33,9 @@ bool TFragmentWriter::FillTree(){
 	//Might have to lock the leaf and tree from here to return?
 	fLeaf = TFragmentQueue::GetPtr(QName)->PopFragment();
 	fTree->Fill();
+	delete fLeaf; //I believe this should delete the pointers to the GRIF frags that were
+				  //created on the heap in the parser. Unless I build histograms after this,
+				  //this should be the last place where the fragments are required.
 
 	return TFragmentQueue::GetPtr(QName)->Size();//returns false if empty, true if not
 

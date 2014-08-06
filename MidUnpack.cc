@@ -138,7 +138,7 @@ int main(int argc, char **argv)
     	//if we succeed in reading the event from file, we process it
 
     	//Currently only one type of Midas Event type == 1
-    	//Need to tell the code that we are on a new cycle when we are on a new cycle
+    	//Need to tell the code that we are on a new cycle when we are on a new cycle (Maybe?)
     	totalEvents++;
     	if(!mEvent)
     		return false;

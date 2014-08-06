@@ -34,7 +34,7 @@ private:
 	void Clear();
 	void DataDump(uint32_t*, uint32_t);
 
-	bool badFrag_flag = false;
+	bool badFrag_flag = false; //Can't be a field if we want to multi-thread
 
 };
 
