@@ -49,7 +49,6 @@ bool Settings::Read(const char* name){
 	const char* verbName = "Verbosity";
 	verb = env->GetValue(verbName,0);
 
-
 	//Read in HPGe detector ON/OFF flag
 	for(int i = 0; i<16;i++){
 		std::string s = "HPGe" + std::to_string(i) ;
@@ -59,9 +58,7 @@ bool Settings::Read(const char* name){
 
 	return true; //this will change for checks of file existence etc..
 
-
 }
-
 
 void Settings::Print(){
 

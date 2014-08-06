@@ -8,7 +8,7 @@ MidUnpack.MaxEventNumber: 10
 MidUnpack.Verbosity: 1
 
 # Kill the program on an error? Comes with a data dump of bad MIDAS event (default = YES)
-MidUnpack.ErrorKill: NO
+MidUnpack.ErrorKill: YES
 
 # Set the goodness of HPGe detectors (default = ON)
 *.HPGe0: ON

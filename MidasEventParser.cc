@@ -437,7 +437,7 @@ void MidasEventParser::BadFrag(){
 	badFrag_flag = true;
 	if(Settings::GetInstance()->GetErrorKillFlag()){
 		DataDump(dataword,mSize);
-		exit(1);
+		//exit(1);
 	}
 
 }
@@ -448,7 +448,7 @@ void MidasEventParser::BadFrag(std::string badstring){
 	if(Settings::GetInstance()->GetErrorKillFlag()){
 		std::cout << *dataword << " " <<  *(dataword+1) << std::endl; //Something weird here
 		DataDump(dataword,mSize);
-		exit(1);
+		//exit(1);
 	}
 
 }

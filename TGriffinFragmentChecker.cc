@@ -13,12 +13,27 @@ void TGriffinFragmentChecker::Check(std::string QName){
 	TGriffinFragment tmpGriffinFrag;
 //	tmpGriffinFrag = TFragmentQueueMap::instance()->PopFragment(QName);
 
-	CheckFlags();
-	CheckDataType();
-	CheckTrailer();
-	CheckChannelTriggerID();
-	CheckPileupHits();
-	//etc...
+	//We perform all of these checks. If there is an issue we will throw an exception so we do not
+	//have to perform all of the checks on a bad fragment.
+	try{
+		CheckFlags();
+		CheckDataType();
+		CheckTrailer();
+		CheckChannelTriggerID();
+		CheckPileupHits();
+		//etc...
+	}
+	//This catch might contain some information on what made the fragment bad
+	catch(char const* failure){
+		if(Settings::GetInstance()->GetErrorKillFlag()){
+			std::cerr << "Bad Event: " << failure << std::endl; //Event number?
+			exit(1);
+		}
+	//Put event in BadQ if we threw
+
+	}
+
+
 }
 
 void TGriffinFragmentChecker::Clear(){
@@ -27,18 +42,21 @@ void TGriffinFragmentChecker::Clear(){
 
 bool TGriffinFragmentChecker::CheckFlags(){
 
+	throw("Bad Flags");
 	return true;
 
 }
 
 bool TGriffinFragmentChecker::CheckDataType(){
 
+	throw("Bad Data Type")
 	return true;
 
 }
 
 bool TGriffinFragmentChecker::CheckTrailer(){
 
+	throw("Bad Trailer");
 	return true;
 
 }
@@ -48,6 +66,7 @@ bool TGriffinFragmentChecker::CheckChannelTriggerID(){
 }
 
 bool TGriffinFragmentChecker::CheckPileupHits(){
+	throw("Bad Pileup Hits");
 	return true;
 }
 
