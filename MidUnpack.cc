@@ -16,7 +16,6 @@
 #include "TStopwatch.h"
 #include "TApplication.h"
 #include "TFragmentQueue.hh"
-#include "TGriffinFragmentChecker.hh"
 #include "TFragmentWriter.hh"
 
 #include "MidasEventParser.hh"
@@ -181,12 +180,12 @@ int main(int argc, char **argv)
         	break;
         }
     }
-    TGriffinFragmentChecker *myFragChecker = new TGriffinFragmentChecker;
+   // TGriffinFragmentChecker *myFragChecker = new TGriffinFragmentChecker;
 
-    while(myFragChecker->Check("parsedQ"));
+   // while(myFragChecker->Check("parsedQ"));
 
     //done with frag checking
-    delete myFragChecker;
+   // delete myFragChecker;
 
     //Might change all of this to be one writer that gets different Q's passed and references
     //different branches.

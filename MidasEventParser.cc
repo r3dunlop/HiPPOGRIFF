@@ -123,7 +123,7 @@ bool MidasEventParser::Parse(uint32_t *dword,uint32_t mS, uint32_t mSerialNumber
 				SetUpperTimestamp(*(dataword+wordcount),GrifFrag);
 				deadtime_flag = true;
 				//Loop over pileup type
-				while(nHits < GetPileupType()){// && bank.GotData()){// && IsGoodFrag()){
+				while(nHits < GetPileupType()){
 					wordcount++;
 					//Move to the next word where the upper K-value and Pulse Height should be stored
 					//I should find out if we should reject an entire MIDAS event if a single K/PH value is bad
@@ -150,6 +150,9 @@ bool MidasEventParser::Parse(uint32_t *dword,uint32_t mS, uint32_t mSerialNumber
 				CheckTrailerWord(*(dataword+wordcount),GrifFrag);
 				trailer_flag = true;
 
+				//At this point we assume that the whole MIDAS event has to be good for each pileup to be good
+				//It might be the case that the later pile ups are actually the bad hits
+				//NOT DEALING WITH PILEUPS!!!!!!
 				if(IsGoodFrag()){
 					TFragmentQueue::GetPtr("parsedQ")->AddToQueue(GrifFrag);
 				}
@@ -218,21 +221,8 @@ void MidasEventParser::SetDetectorType(uint32_t& dataword,TGriffinFragment* Grif
 
 void MidasEventParser::SetPileupType(uint32_t& dataword,TGriffinFragment* GrifFrag){
 	GrifFrag->numberPileups = ((dataword & PileupTypeMask) >> PileupTypeShift);
-	pileupType = GrifFrag->numberPileups;
 //	std::cout << "The Pileup Type is: " << pileupType << std::endl;
 
-	if(GrifFrag->numberPileups > 3)
-	{
-		std::cerr << "Too Many Hits = " << pileupType << std::endl;
-		BadFrag();
-		//exit(-1);
-	}
-	else if(GrifFrag->numberPileups < 1)
-	{
-		std::cerr << "Zero or negative hits = " << pileupType << std::endl;
-		BadFrag();
-		//exit(-1);
-	}
 }
 
 void MidasEventParser::SetPPGPattern(uint32_t& dataword,TGriffinFragment* GrifFrag){

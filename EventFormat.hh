@@ -139,8 +139,8 @@ const uint16_t DetectorTypeShift	= 0;
 //////////////////////     Pile-up Type     /////////////////////////
 //Indicates how many hits were recorded within the evaluation window, with the maximum
 //being 3 hits in one window. The Pile-Up Type is provided in word I as bits 0-2.
-const uint32_t PileupTypeMask		= 0x00000007;
-const uint16_t PileupTypeShift  	= 0;
+const uint32_t PileupTypeMask		= 0x001c0000;
+const uint16_t PileupTypeShift  	= 18;
 //Results:
 // 1 = 1 Hit
 // 2 = 2 Hits
@@ -152,7 +152,7 @@ const uint16_t PileupTypeShift  	= 0;
 //that the threshold crossing occurred, and is provided in word II as 30 bits. The pattern
 //represents, for example, if the beam were being delivered or if it was blocked for decay
 //counting etc.
-const uint32_t PPGPatternMask		= 0x0FFFFFFF;
+const uint32_t PPGPatternMask		= 0x3FFFFFFF;
 const uint16_t PPGPatternShift  	= 0;
 
 

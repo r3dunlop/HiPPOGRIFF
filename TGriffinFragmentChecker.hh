@@ -33,11 +33,9 @@ public:
 	bool Check(std::string);
 
 private:
-	inline bool CheckFlags();
-	inline bool CheckDataType(TGriffinFragment*);
-	inline bool CheckTrailer();
+	inline void CheckDataType(TGriffinFragment*);
 	inline bool CheckChannelTriggerID();
-	inline bool CheckPileupHits();
+	inline void CheckPileupHits(TGriffinFragment*);
 
 	void BadFrag();
 	void BadFrag(std::string);
