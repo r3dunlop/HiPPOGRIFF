@@ -37,7 +37,6 @@ LOADLIBES = \
 	TFragmentQueue.o\
 	MidasEventParser.o \
 	Settings.o\
-	TGriffinFragmentChecker.o\
 	TFragmentWriter.o\
 	$(NAME)Dictionary.o
 
